@@ -1,20 +1,35 @@
-# AS-CNPJ Python
+<div align="center">
+  <img src="assets/brand/as-cnpj-logo-light.svg" alt="AS-CNPJ Python" width="860" />
+</div>
+
+<p align="center">
+  Biblioteca autoral do ecossistema AS-CNPJ para validação, normalização, formatação e cálculo de dígitos verificadores de CNPJ numérico e alfanumérico em Python.
+</p>
+
+<p align="center">
+  <a href="https://github.com/as-cnpj/as-cnpj-python">Repositório</a> ·
+  <a href="https://as-cnpj.org">Site</a> ·
+  <a href="https://github.com/as-cnpj/as-cnpj">Hub do ecossistema</a> ·
+  <a href="docs/api.md">API</a> ·
+  <a href="test/README.md">Testes</a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/as-cnpj/as-cnpj-python/actions/workflows/ci.yml"><img alt="CI as-cnpj-python" src="https://img.shields.io/github/actions/workflow/status/as-cnpj/as-cnpj-python/ci.yml?branch=main&style=flat-square&label=ci&labelColor=1C1917"></a>
+  <a href="https://github.com/as-cnpj/as-cnpj-python/actions/workflows/ci.yml"><img alt="Python 3.10 to 3.14" src="https://img.shields.io/badge/python-3.10%20%7C%203.14-F97316?style=flat-square&labelColor=1C1917"></a>
+  <a href="LICENSE"><img alt="License MIT" src="https://img.shields.io/github/license/as-cnpj/as-cnpj-python?style=flat-square&label=license&labelColor=1C1917&color=84A870"></a>
+  <a href="https://as-cnpj.org"><img alt="Site as-cnpj.org" src="https://img.shields.io/badge/as--cnpj.org-documenta%C3%A7%C3%A3o-FB923C?style=flat-square&labelColor=1C1917"></a>
+</p>
 
 Idiomas: **Português (Brasil)** | [English](README.en.md) | [Español](README.es.md) | [Français](README.fr.md)
-
-[![CI](https://github.com/as-cnpj/as-cnpj-python/actions/workflows/ci.yml/badge.svg)](https://github.com/as-cnpj/as-cnpj-python/actions/workflows/ci.yml)
-
-Biblioteca autoral para validação de CNPJ numérico e alfanumérico em Python.
-
-Repositório: `https://github.com/as-cnpj/as-cnpj-python`
 
 ## Status
 
 - repositório público e ativo;
 - CI rodando em `Python 3.10`, `Python 3.11`, `Python 3.12`, `Python 3.13` e `Python 3.14`;
-- API inicial já funcional e coberta por testes automatizados;
+- API inicial funcional e coberta por testes automatizados;
 - publicação no PyPI ainda não realizada;
-- algoritmo validado com vetores compartilhados do ecossistema.
+- candidato natural ao próximo publish do ecossistema.
 
 ## Instalação
 
@@ -30,63 +45,21 @@ Import package:
 from as_cnpj import is_valid_cnpj
 ```
 
-## Comece por aqui
-
-- [API da biblioteca](docs/api.md)
-- [Estratégia de testes](test/README.md)
-- [Checklist de release](docs/release-checklist.md)
-- [Política de segurança](SECURITY.md)
-- [Hub do ecossistema AS-CNPJ](https://github.com/as-cnpj/as-cnpj)
-
-## O que esta biblioteca resolve
-
-Esta biblioteca existe para cobrir, com uma única API Python, a coexistência entre:
-
-- CNPJ legado numérico;
-- CNPJ alfanumérico previsto pela Receita Federal para julho de 2026;
-- entradas com máscara e sem máscara;
-- fluxos permissivos e fluxos com validação estrita.
-
-Ela implementa:
-
-- validação;
-- normalização;
-- formatação;
-- cálculo de dígitos verificadores;
-- consistência com vetores compartilhados do ecossistema.
-
-## Exemplos rápidos
-
-Validação e normalização:
+## Exemplo rápido
 
 ```python
-from as_cnpj import is_valid, normalize
+from as_cnpj import (
+    assert_valid,
+    calculate_cnpj_check_digits,
+    format_cnpj,
+    is_valid,
+    normalize,
+)
 
 is_valid("12.ABC.345/01DE-35")
 normalize("12.abc.345/01de-35")
-```
-
-Formatação para exibição:
-
-```python
-from as_cnpj import format_cnpj
-
 format_cnpj("12ABC34501DE35")
-```
-
-Borda estrita de API:
-
-```python
-from as_cnpj import is_valid_cnpj
-
-is_valid_cnpj("12.ABC.345/01DE-35", strict=True)
-```
-
-Geração de fixtures e testes:
-
-```python
-from as_cnpj import calculate_cnpj_check_digits
-
+assert_valid("12.ABC.345/01DE-35", strict=True)
 calculate_cnpj_check_digits("12ABC34501DE")
 ```
 
@@ -97,15 +70,14 @@ calculate_cnpj_check_digits("12ABC34501DE")
 - rotinas de saneamento e migração de base com normalização consistente;
 - suites de teste e homologação que precisam gerar e validar exemplos de CNPJ.
 
-## Garantias centrais
+## O que esta biblioteca entrega
 
-- aceita `A-Z0-9` nos 12 primeiros caracteres;
-- mantém os 2 dígitos verificadores como numéricos;
-- usa módulo 11 com conversão `ASCII - 48`;
-- normaliza entrada para caixa alta;
-- rejeita repetições triviais inválidas;
-- suporta modo permissivo e modo estrito;
-- não depende de bibliotecas de runtime para o núcleo do algoritmo.
+- validação de CNPJ numérico legado;
+- validação de CNPJ alfanumérico previsto pela Receita Federal para julho de 2026;
+- suporte a entradas com máscara e sem máscara;
+- modo permissivo e modo estrito;
+- zero dependências de runtime para o núcleo do algoritmo;
+- consistência com vetores compartilhados do hub.
 
 ## API pública
 
@@ -125,52 +97,34 @@ Aliases explícitos:
 - `assert_valid_cnpj(value, strict=False)`
 - `calculate_cnpj_check_digits(base12)`
 
-## Testes
+## Garantias centrais
 
-Execução direta:
+- aceita `A-Z0-9` nos 12 primeiros caracteres;
+- mantém os 2 dígitos verificadores como numéricos;
+- usa módulo 11 com conversão `ASCII - 48`;
+- normaliza entrada para caixa alta;
+- rejeita repetições triviais inválidas;
+- mantém o contrato alinhado aos vetores compartilhados do ecossistema.
 
-```bash
-python -m unittest discover -s test -p "test_*.py"
-```
+## Documentação e referências
 
-O conjunto cobre:
-
-- casos positivos numéricos;
-- casos positivos alfanuméricos;
-- casos negativos;
-- modo estrito;
-- consistência entre aliases;
-- vetores compartilhados do hub.
+- [API da biblioteca](docs/api.md)
+- [Estratégia de testes](test/README.md)
+- [Checklist de release](docs/release-checklist.md)
+- [Política de segurança](SECURITY.md)
+- [Hub do ecossistema AS-CNPJ](https://github.com/as-cnpj/as-cnpj)
 
 ## Vetores compartilhados
 
 O `as-cnpj-python` não define a verdade sozinho.
 
-O contrato do ecossistema também depende de:
+O contrato do ecossistema depende também de:
 
 - vetores compartilhados no hub;
 - regras documentadas a partir das fontes oficiais;
 - convergência entre implementações em linguagens diferentes.
 
-## Ecossistema
-
-Org GitHub:
-
-- `https://github.com/as-cnpj`
-
-Hub do projeto:
-
-- manifesto;
-- documentação consolidada;
-- vetores compartilhados;
-- governança entre linguagens.
-
 ## Manutenção
 
-Maintainer:
-
-- `@0moura`
-
-Contato institucional:
-
-- `ascnpj@0moura.io`
+Maintainer: `@0moura`  
+Contato institucional: `ascnpj@0moura.io`
