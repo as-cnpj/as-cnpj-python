@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/brand/as-cnpj-logo-light.svg" alt="AS-CNPJ Python" width="860" />
+  <img src="https://raw.githubusercontent.com/as-cnpj/as-cnpj-python/main/assets/brand/as-cnpj-logo-dark.svg" alt="AS-CNPJ Python" width="860" />
 </div>
 
 <p align="center">

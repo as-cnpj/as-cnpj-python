@@ -10,3 +10,4 @@ Idiomas: [Português (Brasil)](CHANGELOG.md) | [English](CHANGELOG.en.md) | **Es
 - pruebas automatizadas contra los vectores compartidos del hub
 - endurecimiento contra Unicode fuera de ASCII imprimible
 - workflow de release preparado para publicación en PyPI
+- banner del README ajustado para renderización correcta en PyPI

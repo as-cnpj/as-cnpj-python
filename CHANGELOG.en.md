@@ -10,3 +10,4 @@ Languages: [Português (Brasil)](CHANGELOG.md) | **English** | [Español](CHANGE
 - automated tests against the shared hub vectors
 - hardening against Unicode outside printable ASCII
 - release workflow prepared for PyPI publishing
+- README banner adjusted for correct rendering on PyPI
