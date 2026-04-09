@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -29,3 +29,50 @@ jobs:
 
       - name: Run tests
         run: python -m unittest discover -s test -p "test_*.py"
+
+      - name: Install packaging tools
+        if: matrix.python-version == '3.14'
+        run: python -m pip install --upgrade build twine
+
+      - name: Build distributions
+        if: matrix.python-version == '3.14'
+        run: python -m build --sdist --wheel --outdir dist
+
+      - name: Check package metadata
+        if: matrix.python-version == '3.14'
+        run: python -m twine check dist/*
+
+      - name: Verify distribution contents
+        if: matrix.python-version == '3.14'
+        shell: python
+        run: |
+          import pathlib
+          import tarfile
+          import zipfile
+
+          dist = pathlib.Path("dist")
+          archives = list(dist.glob("*.tar.gz")) + list(dist.glob("*.whl"))
+          if not archives:
+              raise SystemExit("No distributions found in dist/")
+
+          forbidden_prefixes = (".github/", "assets/", "docs/", "test/", "vectors/")
+          forbidden_suffixes = (".pyc",)
+
+          for archive in archives:
+              if archive.suffix == ".whl":
+                  with zipfile.ZipFile(archive) as handle:
+                      names = handle.namelist()
+              else:
+                  with tarfile.open(archive) as handle:
+                      names = [member.name for member in handle.getmembers() if member.isfile()]
+
+              offenders = []
+              for name in names:
+                  normalized = name.split("/", 1)[1] if archive.suffix != ".whl" and "/" in name else name
+                  if normalized.startswith(forbidden_prefixes) or normalized.endswith(forbidden_suffixes):
+                      offenders.append(normalized)
+
+              if offenders:
+                  raise SystemExit(f"Forbidden files found in {archive.name}: {offenders}")
+
+          print("Distribution contents OK")

@@ -4,7 +4,9 @@ Languages: [Português (Brasil)](CHANGELOG.md) | **English** | [Español](CHANGE
 
 ## 0.1.0
 
-- first local seed of the Python port
+- first public release candidate of the Python port
 - numeric and alphanumeric CNPJ validation
 - normalization, formatting, and check digit calculation
 - automated tests against the shared hub vectors
+- hardening against Unicode outside printable ASCII
+- release workflow prepared for PyPI publishing

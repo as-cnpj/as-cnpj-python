@@ -1,10 +1,10 @@
-# AS-CNPJ Python Reference
+# AS-CNPJ Python
 
 Idiomas: [Português (Brasil)](README.md) | [English](README.en.md) | **Español** | [Français](README.fr.md)
 
-Esta carpeta es la copia de trabajo de la biblioteca Python del ecosistema AS-CNPJ dentro del hub.
+Biblioteca autoral AS-CNPJ para validación, normalización, formateo y cálculo de dígitos verificadores de CNPJ numérico y alfanumérico en Python.
 
-El repositorio público planificado es:
+Repositorio público:
 
 - `https://github.com/as-cnpj/as-cnpj-python`
 
@@ -16,13 +16,12 @@ El repositorio público planificado es:
 - [Política de seguridad](SECURITY.md)
 - [Hub del ecosistema AS-CNPJ](../../README.md)
 
-## Papel dentro del hub
+## Estado
 
-Existe para:
-
-- consolidar el port Python a partir del contrato del ecosistema;
-- probar compatibilidad con los vectores compartidos;
-- servir como base para la futura apertura del repositorio `as-cnpj-python`.
+- repositorio público y mantenimiento activo;
+- CI ejecutándose en `Python 3.10` a `Python 3.14`;
+- API funcional cubierta por pruebas automatizadas;
+- workflow de release preparado para Trusted Publishing en PyPI.
 
 ## API pública espejada
 
@@ -43,14 +42,16 @@ Existe para:
 python -m unittest discover -s test -p "test_*.py"
 ```
 
-CI planificada para el repositorio derivado:
+Matriz de CI soportada:
 
 - `Python 3.10`
 - `Python 3.11`
 - `Python 3.12`
+- `Python 3.13`
+- `Python 3.14`
 
 ## Publicación
 
 - paquete planificado en PyPI: `as-cnpj`
 - paquete de importación: `as_cnpj`
-- estado actual: semilla local lista para una futura extracción
+- estado actual: listo para la primera publicación pública en PyPI

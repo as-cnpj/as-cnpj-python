@@ -8,7 +8,8 @@ version = "0.1.0"
 description = "Biblioteca autoral AS-CNPJ para validacao, normalizacao e formatacao de CNPJ numerico e alfanumerico."
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
   { name = "0moura", email = "ascnpj@0moura.io" }
 ]
@@ -16,7 +17,6 @@ keywords = ["cnpj", "cnpj-alfanumerico", "brasil", "validator", "as-cnpj"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.10",
@@ -30,6 +30,7 @@ dependencies = []
 
 [project.urls]
 Homepage = "https://github.com/as-cnpj/as-cnpj-python"
+Documentation = "https://as-cnpj.org"
 Repository = "https://github.com/as-cnpj/as-cnpj-python"
 Issues = "https://github.com/as-cnpj/as-cnpj-python/issues"
 

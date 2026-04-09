@@ -50,6 +50,11 @@ class CNPJTests(unittest.TestCase):
             with self.assertRaises(TypeError):
                 normalize_cnpj(value)  # type: ignore[arg-type]
 
+    def test_normalize_rejeita_unicode_fora_do_ascii_printavel(self) -> None:
+        for value in ("12\u00DF34501DE35", "\ufb012345678901DE35"):
+            with self.assertRaisesRegex(TypeError, "ASCII imprimiveis"):
+                normalize_cnpj(value)
+
     def test_calcula_os_digitos_do_exemplo_oficial(self) -> None:
         self.assertEqual(calculate_cnpj_check_digits("12ABC34501DE"), "35")
         self.assertEqual(calculate_check_digits("12ABC34501DE"), "35")
@@ -60,6 +65,11 @@ class CNPJTests(unittest.TestCase):
         for value in invalid_values:
             with self.assertRaises(TypeError):
                 calculate_cnpj_check_digits(value)  # type: ignore[arg-type]
+
+    def test_calculate_check_digits_rejeita_unicode_fora_do_ascii_printavel(self) -> None:
+        for value in ("\u00DF2345678901", "\ufb012345678901"):
+            with self.assertRaisesRegex(TypeError, "ASCII imprimiveis"):
+                calculate_cnpj_check_digits(value)
 
     def test_valida_cnpj_alfanumerico_oficial(self) -> None:
         self.assertTrue(is_valid_cnpj("12.ABC.345/01DE-35"))

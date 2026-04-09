@@ -19,6 +19,16 @@ def _sanitize(value: str) -> str:
     return re.sub(r"[^A-Z0-9]", "", value.upper())
 
 
+def _ensure_string(value: object, message: str) -> str:
+    if not isinstance(value, str):
+        raise TypeError(message)
+
+    if not _is_ascii_printable(value):
+        raise TypeError("A entrada deve conter apenas caracteres ASCII imprimiveis.")
+
+    return value
+
+
 def _is_strict_format(value: str) -> bool:
     return bool(PLAIN_CNPJ_PATTERN.fullmatch(value) or MASKED_CNPJ_PATTERN.fullmatch(value))
 
@@ -72,10 +82,9 @@ def _validate_and_normalize(value: object, *, strict: bool) -> str | None:
 
 
 def normalize_cnpj(value: str) -> str:
-    if not isinstance(value, str):
-        raise TypeError("A entrada deve ser uma string.")
+    raw_value = _ensure_string(value, "A entrada deve ser uma string.")
 
-    return _sanitize(value)
+    return _sanitize(raw_value)
 
 
 def normalize(value: str) -> str:
@@ -83,10 +92,9 @@ def normalize(value: str) -> str:
 
 
 def calculate_cnpj_check_digits(base12: str) -> str:
-    if not isinstance(base12, str):
-        raise TypeError("A base do CNPJ deve ser uma string.")
+    raw_base = _ensure_string(base12, "A base do CNPJ deve ser uma string.")
 
-    normalized_base = _sanitize(base12)
+    normalized_base = _sanitize(raw_base)
 
     if not CNPJ_BASE_PATTERN.fullmatch(normalized_base):
         raise TypeError("A base do CNPJ deve conter exatamente 12 caracteres alfanumericos.")

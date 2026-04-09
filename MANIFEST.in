@@ -1,0 +1,21 @@
+graft src
+
+include pyproject.toml
+include LICENSE
+include README.md
+include README.en.md
+include README.es.md
+include README.fr.md
+include CHANGELOG.md
+include CHANGELOG.en.md
+include CHANGELOG.es.md
+include CHANGELOG.fr.md
+
+prune .github
+prune assets
+prune docs
+prune test
+prune vectors
+
+global-exclude __pycache__
+global-exclude *.py[cod]

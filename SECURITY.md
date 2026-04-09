@@ -12,7 +12,7 @@ Canal alternativo:
 
 ## Escopo
 
-Esta semente cobre:
+Esta biblioteca cobre:
 
 - núcleo de validação;
 - normalização e formatação;

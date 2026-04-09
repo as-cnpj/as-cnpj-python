@@ -27,9 +27,9 @@ Idiomas: **Português (Brasil)** | [English](README.en.md) | [Español](README.e
 
 - repositório público e ativo;
 - CI rodando em `Python 3.10`, `Python 3.11`, `Python 3.12`, `Python 3.13` e `Python 3.14`;
-- API inicial funcional e coberta por testes automatizados;
-- publicação no PyPI ainda não realizada;
-- candidato natural ao próximo publish do ecossistema.
+- API funcional e coberta por testes automatizados;
+- release workflow preparado para publicação no PyPI via Trusted Publishing;
+- candidato imediato à primeira publicação pública do port Python.
 
 ## Instalação
 
@@ -113,6 +113,12 @@ Aliases explícitos:
 - [Checklist de release](docs/release-checklist.md)
 - [Política de segurança](SECURITY.md)
 - [Hub do ecossistema AS-CNPJ](https://github.com/as-cnpj/as-cnpj)
+
+## Publicação
+
+- pacote planejado no PyPI: `as-cnpj`
+- import público: `as_cnpj`
+- release via GitHub Releases com Trusted Publishing para o PyPI
 
 ## Vetores compartilhados
 
