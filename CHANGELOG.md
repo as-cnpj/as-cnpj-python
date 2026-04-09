@@ -2,6 +2,10 @@
 
 Idiomas: **Português (Brasil)** | [English](CHANGELOG.en.md) | [Español](CHANGELOG.es.md) | [Français](CHANGELOG.fr.md)
 
+## 0.1.1
+
+- correção do banner do README para renderização correta no PyPI
+
 ## 0.1.0
 
 - primeira release pública candidata do port Python
