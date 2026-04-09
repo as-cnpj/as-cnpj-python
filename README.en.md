@@ -1,10 +1,10 @@
-# AS-CNPJ Python Reference
+# AS-CNPJ Python
 
 Languages: [Português (Brasil)](README.md) | **English** | [Español](README.es.md) | [Français](README.fr.md)
 
-This folder is the working copy of the AS-CNPJ Python library inside the hub.
+Author-led AS-CNPJ library for numeric and alphanumeric CNPJ validation, normalization, formatting, and check digit calculation in Python.
 
-The planned public repository is:
+Public repository:
 
 - `https://github.com/as-cnpj/as-cnpj-python`
 
@@ -16,13 +16,12 @@ The planned public repository is:
 - [Security policy](SECURITY.md)
 - [AS-CNPJ ecosystem hub](../../README.md)
 
-## Role inside the hub
+## Status
 
-It exists to:
-
-- consolidate the Python port from the ecosystem contract;
-- prove compatibility against the shared vectors;
-- serve as the base for the future `as-cnpj-python` repository.
+- public repository and active maintenance;
+- CI running on `Python 3.10` through `Python 3.14`;
+- functional API covered by automated tests;
+- release workflow prepared for Trusted Publishing on PyPI.
 
 ## Mirrored public API
 
@@ -43,14 +42,16 @@ It exists to:
 python -m unittest discover -s test -p "test_*.py"
 ```
 
-Planned CI for the derived repository:
+Supported CI matrix:
 
 - `Python 3.10`
 - `Python 3.11`
 - `Python 3.12`
+- `Python 3.13`
+- `Python 3.14`
 
 ## Publication
 
 - planned PyPI package: `as-cnpj`
 - import package: `as_cnpj`
-- current status: local seed ready for future extraction
+- current status: ready for the first public PyPI release

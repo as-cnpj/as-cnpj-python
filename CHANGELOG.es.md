@@ -4,7 +4,9 @@ Idiomas: [Português (Brasil)](CHANGELOG.md) | [English](CHANGELOG.en.md) | **Es
 
 ## 0.1.0
 
-- primera semilla local del port Python
+- primera versión candidata pública del port Python
 - validación de CNPJ numérico y alfanumérico
 - normalización, formateo y cálculo de dígitos verificadores
 - pruebas automatizadas contra los vectores compartidos del hub
+- endurecimiento contra Unicode fuera de ASCII imprimible
+- workflow de release preparado para publicación en PyPI

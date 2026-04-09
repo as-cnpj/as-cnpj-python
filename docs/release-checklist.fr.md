@@ -6,5 +6,7 @@ Langues : [Português (Brasil)](release-checklist.md) | [English](release-checkl
 - valider `pyproject.toml` ;
 - valider le workflow de CI et la matrice Python supportée ;
 - exécuter `python -m unittest discover -s test -p "test_*.py"` ;
+- exécuter `python -m build --sdist --wheel` ;
+- exécuter `python -m twine check dist/*` ;
 - confirmer l'alignement avec les vecteurs partagés ;
-- publier seulement quand le dépôt dérivé existera et sera prêt pour l'usage public.
+- publier via une GitHub Release avec Trusted Publishing sur PyPI.
