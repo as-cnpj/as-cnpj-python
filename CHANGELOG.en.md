@@ -2,6 +2,10 @@
 
 Languages: [Português (Brasil)](CHANGELOG.md) | **English** | [Español](CHANGELOG.es.md) | [Français](CHANGELOG.fr.md)
 
+## 0.1.1
+
+- fix README banner rendering on PyPI
+
 ## 0.1.0
 
 - first public release candidate of the Python port
@@ -10,4 +14,3 @@ Languages: [Português (Brasil)](CHANGELOG.md) | **English** | [Español](CHANGE
 - automated tests against the shared hub vectors
 - hardening against Unicode outside printable ASCII
 - release workflow prepared for PyPI publishing
-- README banner adjusted for correct rendering on PyPI
