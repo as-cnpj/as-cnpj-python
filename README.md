@@ -8,35 +8,36 @@
 
 <p align="center">
   <a href="https://github.com/as-cnpj/as-cnpj-python">Repositório</a> ·
+  <a href="https://pypi.org/project/as-cnpj/">PyPI</a> ·
   <a href="https://as-cnpj.org">Site</a> ·
   <a href="https://github.com/as-cnpj/as-cnpj">Hub do ecossistema</a> ·
-  <a href="docs/api.md">API</a> ·
-  <a href="test/README.md">Testes</a>
+  <a href="https://github.com/as-cnpj/as-cnpj-python/blob/main/docs/api.md">API</a> ·
+  <a href="https://github.com/as-cnpj/as-cnpj-python/blob/main/test/README.md">Testes</a>
 </p>
 
 <p align="center">
+  <a href="https://pypi.org/project/as-cnpj/"><img alt="PyPI as-cnpj" src="https://img.shields.io/pypi/v/as-cnpj?style=flat-square&label=pypi&labelColor=1C1917&color=F97316"></a>
   <a href="https://github.com/as-cnpj/as-cnpj-python/actions/workflows/ci.yml"><img alt="CI as-cnpj-python" src="https://img.shields.io/github/actions/workflow/status/as-cnpj/as-cnpj-python/ci.yml?branch=main&style=flat-square&label=ci&labelColor=1C1917"></a>
   <a href="https://github.com/as-cnpj/as-cnpj-python/actions/workflows/ci.yml"><img alt="Python 3.10 to 3.14" src="https://img.shields.io/badge/python-3.10%20%7C%203.14-F97316?style=flat-square&labelColor=1C1917"></a>
-  <a href="LICENSE"><img alt="License MIT" src="https://img.shields.io/github/license/as-cnpj/as-cnpj-python?style=flat-square&label=license&labelColor=1C1917&color=84A870"></a>
+  <a href="https://github.com/as-cnpj/as-cnpj-python/blob/main/LICENSE"><img alt="License MIT" src="https://img.shields.io/github/license/as-cnpj/as-cnpj-python?style=flat-square&label=license&labelColor=1C1917&color=84A870"></a>
   <a href="https://as-cnpj.org"><img alt="Site as-cnpj.org" src="https://img.shields.io/badge/as--cnpj.org-documenta%C3%A7%C3%A3o-FB923C?style=flat-square&labelColor=1C1917"></a>
 </p>
 
-Idiomas: **Português (Brasil)** | [English](README.en.md) | [Español](README.es.md) | [Français](README.fr.md)
+Idiomas: **Português (Brasil)** | [English](https://github.com/as-cnpj/as-cnpj-python/blob/main/README.en.md) | [Español](https://github.com/as-cnpj/as-cnpj-python/blob/main/README.es.md) | [Français](https://github.com/as-cnpj/as-cnpj-python/blob/main/README.fr.md)
 
 ## Status
 
 - repositório público e ativo;
+- publicado no PyPI como [`as-cnpj`](https://pypi.org/project/as-cnpj/);
 - CI rodando em `Python 3.10`, `Python 3.11`, `Python 3.12`, `Python 3.13` e `Python 3.14`;
 - API funcional e coberta por testes automatizados;
 - release workflow preparado para publicação no PyPI via Trusted Publishing;
-- candidato imediato à primeira publicação pública do port Python.
+- fluxo de publicação e pacote já ativos publicamente.
 
 ## Instalação
 
-Enquanto a publicação no PyPI não acontece, a forma mais direta de avaliação é instalar a partir do GitHub:
-
 ```bash
-python -m pip install git+https://github.com/as-cnpj/as-cnpj-python.git
+python -m pip install as-cnpj
 ```
 
 Import package:
@@ -108,10 +109,10 @@ Aliases explícitos:
 
 ## Documentação e referências
 
-- [API da biblioteca](docs/api.md)
-- [Estratégia de testes](test/README.md)
-- [Checklist de release](docs/release-checklist.md)
-- [Política de segurança](SECURITY.md)
+- [API da biblioteca](https://github.com/as-cnpj/as-cnpj-python/blob/main/docs/api.md)
+- [Estratégia de testes](https://github.com/as-cnpj/as-cnpj-python/blob/main/test/README.md)
+- [Checklist de release](https://github.com/as-cnpj/as-cnpj-python/blob/main/docs/release-checklist.md)
+- [Política de segurança](https://github.com/as-cnpj/as-cnpj-python/blob/main/SECURITY.md)
 - [Hub do ecossistema AS-CNPJ](https://github.com/as-cnpj/as-cnpj)
 
 ## Publicação

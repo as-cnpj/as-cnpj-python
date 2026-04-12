@@ -2,6 +2,12 @@
 
 Idiomas: [Português (Brasil)](CHANGELOG.md) | [English](CHANGELOG.en.md) | **Español** | [Français](CHANGELOG.fr.md)
 
+## 0.1.2
+
+- actualiza el README para reflejar la publicación en PyPI
+- convierte los enlaces del README a URLs absolutas de GitHub y del ecosistema
+- añade badge y enlace directo al paquete `as-cnpj`
+
 ## 0.1.1
 
 - corrige la renderización del banner del README en PyPI
