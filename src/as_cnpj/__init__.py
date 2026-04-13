@@ -9,6 +9,8 @@ from .cnpj import (
     is_valid_cnpj,
     normalize,
     normalize_cnpj,
+    validate_many,
+    validate_many_cnpj,
 )
 
 __all__ = [
@@ -22,4 +24,6 @@ __all__ = [
     "is_valid_cnpj",
     "normalize",
     "normalize_cnpj",
+    "validate_many",
+    "validate_many_cnpj",
 ]
