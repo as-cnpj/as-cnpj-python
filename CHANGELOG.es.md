@@ -2,6 +2,13 @@
 
 Idiomas: [Português (Brasil)](CHANGELOG.md) | [English](CHANGELOG.en.md) | **Español** | [Français](CHANGELOG.fr.md)
 
+## 0.1.3
+
+- añade `validate_many` y `validate_many_cnpj`
+- preserva el orden de entrada y devuelve `items` + `summary`
+- expone códigos `reason` estables por ítem
+- actualiza README y API para la validación por lotes
+
 ## 0.1.2
 
 - actualiza el README para reflejar la publicación en PyPI
