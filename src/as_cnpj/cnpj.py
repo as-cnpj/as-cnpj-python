@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import re
+from collections import Counter
+from typing import Any
 
 CNPJ_LENGTH = 14
 CNPJ_BASE_LENGTH = 12
@@ -10,6 +12,7 @@ PLAIN_CNPJ_PATTERN = re.compile(r"^[A-Z0-9]{12}[0-9]{2}$")
 MASKED_CNPJ_PATTERN = re.compile(r"^[A-Z0-9]{2}\.[A-Z0-9]{3}\.[A-Z0-9]{3}/[A-Z0-9]{4}-[0-9]{2}$")
 CNPJ_BASE_PATTERN = re.compile(r"^[A-Z0-9]{12}$")
 REPEATED_CHARS_PATTERN = re.compile(r"^([A-Z0-9])\1{13}$")
+CNPJ_DIGITS_PATTERN = re.compile(r"^[0-9]{2}$")
 
 FIRST_DIGIT_WEIGHTS = (5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2)
 SECOND_DIGIT_WEIGHTS = (6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2)
@@ -51,34 +54,126 @@ def _calculate_digit(value: str, weights: tuple[int, ...]) -> int:
     return 0 if remainder < 2 else 11 - remainder
 
 
-def _validate_and_normalize(value: object, *, strict: bool) -> str | None:
+def _format_normalized(value: str) -> str:
+    return (
+        f"{value[0:2]}."
+        f"{value[2:5]}."
+        f"{value[5:8]}/"
+        f"{value[8:12]}-"
+        f"{value[12:14]}"
+    )
+
+
+def _analyze_cnpj(value: object, *, strict: bool) -> dict[str, Any]:
     if not isinstance(value, str):
-        return None
+        return {
+            "index": -1,
+            "input": value,
+            "normalized": None,
+            "formatted": None,
+            "valid": False,
+            "strict_valid": False,
+            "reason": "INVALID_TYPE",
+        }
 
     if len(value) > MAX_INPUT_LENGTH:
-        return None
+        return {
+            "index": -1,
+            "input": value,
+            "normalized": None,
+            "formatted": None,
+            "valid": False,
+            "strict_valid": False,
+            "reason": "INVALID_LENGTH",
+        }
 
     if not _is_ascii_printable(value):
-        return None
+        return {
+            "index": -1,
+            "input": value,
+            "normalized": None,
+            "formatted": None,
+            "valid": False,
+            "strict_valid": False,
+            "reason": "INVALID_ASCII",
+        }
 
     normalized = _sanitize(value)
 
     if strict and not _is_strict_format(value.upper()):
-        return None
+        return {
+            "index": -1,
+            "input": value,
+            "normalized": None,
+            "formatted": None,
+            "valid": False,
+            "strict_valid": False,
+            "reason": "INVALID_STRICT_FORMAT",
+        }
 
-    if not PLAIN_CNPJ_PATTERN.fullmatch(normalized):
-        return None
-
-    if REPEATED_CHARS_PATTERN.fullmatch(normalized):
-        return None
+    if len(normalized) != CNPJ_LENGTH:
+        return {
+            "index": -1,
+            "input": value,
+            "normalized": None,
+            "formatted": None,
+            "valid": False,
+            "strict_valid": False,
+            "reason": "INVALID_LENGTH",
+        }
 
     base = normalized[:CNPJ_BASE_LENGTH]
+    digits = normalized[CNPJ_BASE_LENGTH:]
+
+    if not CNPJ_BASE_PATTERN.fullmatch(base) or not CNPJ_DIGITS_PATTERN.fullmatch(digits):
+        return {
+            "index": -1,
+            "input": value,
+            "normalized": None,
+            "formatted": None,
+            "valid": False,
+            "strict_valid": False,
+            "reason": "INVALID_BASE",
+        }
+
+    if REPEATED_CHARS_PATTERN.fullmatch(normalized):
+        return {
+            "index": -1,
+            "input": value,
+            "normalized": None,
+            "formatted": None,
+            "valid": False,
+            "strict_valid": False,
+            "reason": "TRIVIAL_REPETITION",
+        }
+
     expected_digits = calculate_cnpj_check_digits(base)
 
     if normalized != f"{base}{expected_digits}":
-        return None
+        return {
+            "index": -1,
+            "input": value,
+            "normalized": None,
+            "formatted": None,
+            "valid": False,
+            "strict_valid": False,
+            "reason": "INVALID_CHECK_DIGIT",
+        }
 
-    return normalized
+    return {
+        "index": -1,
+        "input": value,
+        "normalized": normalized,
+        "formatted": _format_normalized(normalized),
+        "valid": True,
+        "strict_valid": _is_strict_format(value.upper()),
+        "reason": "VALID",
+    }
+
+
+def _validate_and_normalize(value: object, *, strict: bool) -> str | None:
+    result = _analyze_cnpj(value, strict=strict)
+    return result["normalized"] if result["valid"] else None
 
 
 def normalize_cnpj(value: str) -> str:
@@ -118,18 +213,12 @@ def is_valid(value: object, *, strict: bool = False) -> bool:
 
 
 def format_cnpj(value: object, *, strict: bool = False) -> str | None:
-    normalized = _validate_and_normalize(value, strict=strict)
+    result = _analyze_cnpj(value, strict=strict)
 
-    if normalized is None:
+    if not result["valid"]:
         return None
 
-    return (
-        f"{normalized[0:2]}."
-        f"{normalized[2:5]}."
-        f"{normalized[5:8]}/"
-        f"{normalized[8:12]}-"
-        f"{normalized[12:14]}"
-    )
+    return result["formatted"]
 
 
 def format(value: object, *, strict: bool = False) -> str | None:
@@ -147,3 +236,37 @@ def assert_valid_cnpj(value: object, *, strict: bool = False) -> str:
 
 def assert_valid(value: object, *, strict: bool = False) -> str:
     return assert_valid_cnpj(value, strict=strict)
+
+
+def validate_many_cnpj(values: list[object], *, strict: bool = False) -> dict[str, object]:
+    if not isinstance(values, list):
+        raise TypeError("A entrada em lote deve ser uma lista.")
+
+    items: list[dict[str, object]] = []
+
+    for index, value in enumerate(values):
+        result = _analyze_cnpj(value, strict=strict)
+        result["index"] = index
+        items.append(result)
+
+    invalid_reasons = Counter(
+        item["reason"]
+        for item in items
+        if not item["valid"]
+    )
+
+    summary = {
+        "total": len(items),
+        "valid": sum(1 for item in items if item["valid"]),
+        "invalid": sum(1 for item in items if not item["valid"]),
+        "reasons": dict(invalid_reasons),
+    }
+
+    return {
+        "items": items,
+        "summary": summary,
+    }
+
+
+def validate_many(values: list[object], *, strict: bool = False) -> dict[str, object]:
+    return validate_many_cnpj(values, strict=strict)

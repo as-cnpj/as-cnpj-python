@@ -20,7 +20,7 @@
   <a href="https://github.com/as-cnpj/as-cnpj-python/actions/workflows/ci.yml"><img alt="CI as-cnpj-python" src="https://img.shields.io/github/actions/workflow/status/as-cnpj/as-cnpj-python/ci.yml?branch=main&style=flat-square&label=ci&labelColor=1C1917"></a>
   <a href="https://github.com/as-cnpj/as-cnpj-python/actions/workflows/ci.yml"><img alt="Python 3.10 to 3.14" src="https://img.shields.io/badge/python-3.10%20%7C%203.14-F97316?style=flat-square&labelColor=1C1917"></a>
   <a href="https://github.com/as-cnpj/as-cnpj-python/blob/main/LICENSE"><img alt="License MIT" src="https://img.shields.io/github/license/as-cnpj/as-cnpj-python?style=flat-square&label=license&labelColor=1C1917&color=84A870"></a>
-  <a href="https://as-cnpj.org"><img alt="Site as-cnpj.org" src="https://img.shields.io/badge/as--cnpj.org-documenta%C3%A7%C3%A3o-FB923C?style=flat-square&labelColor=1C1917"></a>
+  <a href="https://as-cnpj.org"><img alt="Site as-cnpj.org" src="https://img.shields.io/badge/as--cnpj.org-documentação-FB923C?style=flat-square&labelColor=1C1917"></a>
 </p>
 
 Idiomas: **Português (Brasil)** | [English](https://github.com/as-cnpj/as-cnpj-python/blob/main/README.en.md) | [Español](https://github.com/as-cnpj/as-cnpj-python/blob/main/README.es.md) | [Français](https://github.com/as-cnpj/as-cnpj-python/blob/main/README.fr.md)
@@ -40,7 +40,7 @@ Idiomas: **Português (Brasil)** | [English](https://github.com/as-cnpj/as-cnpj-
 python -m pip install as-cnpj
 ```
 
-Import package:
+Import público:
 
 ```python
 from as_cnpj import is_valid_cnpj
@@ -89,6 +89,7 @@ Funções principais:
 - `format(value, strict=False)`
 - `assert_valid(value, strict=False)`
 - `calculate_check_digits(base12)`
+- `validate_many(values, strict=False)`
 
 Aliases explícitos:
 
@@ -97,6 +98,33 @@ Aliases explícitos:
 - `format_cnpj(value, strict=False)`
 - `assert_valid_cnpj(value, strict=False)`
 - `calculate_cnpj_check_digits(base12)`
+- `validate_many_cnpj(values, strict=False)`
+
+## Validação em lote
+
+Além da API unitária, a biblioteca também expõe:
+
+- `validate_many(values, strict=False)`
+- `validate_many_cnpj(values, strict=False)`
+
+O retorno preserva a ordem de entrada e entrega:
+
+- `items`: resultado item a item com `index`, `input`, `normalized`, `formatted`, `valid`, `strict_valid` e `reason`;
+- `summary`: total, válidos, inválidos e contagem agregada por motivo.
+
+```python
+from as_cnpj import validate_many
+
+result = validate_many([
+    "12.ABC.345/01DE-35",
+    "12.ABC.345/01DE-36",
+    None,
+])
+
+result["items"][0]["valid"]
+result["items"][1]["reason"]
+result["summary"]["reasons"]
+```
 
 ## Garantias centrais
 
@@ -117,7 +145,7 @@ Aliases explícitos:
 
 ## Publicação
 
-- pacote planejado no PyPI: `as-cnpj`
+- pacote publicado no PyPI: `as-cnpj`
 - import público: `as_cnpj`
 - release via GitHub Releases com Trusted Publishing para o PyPI
 

@@ -19,6 +19,8 @@ from as_cnpj import (  # noqa: E402
     is_valid_cnpj,
     normalize,
     normalize_cnpj,
+    validate_many,
+    validate_many_cnpj,
 )
 
 
@@ -142,6 +144,76 @@ class CNPJTests(unittest.TestCase):
         for entry in VECTORS["invalid"]:
             reason = entry.get("reason")
             self.assertTrue(isinstance(reason, str) and len(reason) > 0, f"reason ausente: {entry['id']}")
+
+    def test_validate_many_preserva_ordem_e_agrega_sumario(self) -> None:
+        result = validate_many_cnpj(
+            [
+                "12.ABC.345/01DE-35",
+                "12.ABC.345/01DE-36",
+                None,
+                "11.222.333/0001-81",
+            ]
+        )
+
+        items = result["items"]
+        summary = result["summary"]
+
+        self.assertEqual(len(items), 4)
+        self.assertEqual(items[0]["index"], 0)
+        self.assertEqual(items[0]["valid"], True)
+        self.assertEqual(items[0]["reason"], "VALID")
+        self.assertEqual(items[0]["normalized"], "12ABC34501DE35")
+        self.assertEqual(items[0]["formatted"], "12.ABC.345/01DE-35")
+
+        self.assertEqual(items[1]["index"], 1)
+        self.assertEqual(items[1]["valid"], False)
+        self.assertEqual(items[1]["reason"], "INVALID_CHECK_DIGIT")
+        self.assertIsNone(items[1]["normalized"])
+
+        self.assertEqual(items[2]["index"], 2)
+        self.assertEqual(items[2]["valid"], False)
+        self.assertEqual(items[2]["reason"], "INVALID_TYPE")
+
+        self.assertEqual(items[3]["index"], 3)
+        self.assertEqual(items[3]["valid"], True)
+        self.assertEqual(items[3]["normalized"], "11222333000181")
+        self.assertEqual(items[3]["formatted"], "11.222.333/0001-81")
+
+        self.assertEqual(summary["total"], 4)
+        self.assertEqual(summary["valid"], 2)
+        self.assertEqual(summary["invalid"], 2)
+        self.assertEqual(
+            summary["reasons"],
+            {
+                "INVALID_CHECK_DIGIT": 1,
+                "INVALID_TYPE": 1,
+            },
+        )
+
+    def test_validate_many_respeita_modo_strict(self) -> None:
+        result = validate_many(
+            [
+                "12.ABC.345/01DE-35",
+                "12#ABC#345/01DE-35",
+            ],
+            strict=True,
+        )
+
+        items = result["items"]
+        summary = result["summary"]
+
+        self.assertEqual(items[0]["valid"], True)
+        self.assertEqual(items[0]["strict_valid"], True)
+        self.assertEqual(items[1]["valid"], False)
+        self.assertEqual(items[1]["reason"], "INVALID_STRICT_FORMAT")
+        self.assertEqual(summary["reasons"], {"INVALID_STRICT_FORMAT": 1})
+
+    def test_validate_many_lanca_type_error_para_nao_lista(self) -> None:
+        invalid_values = (None, "", 42, {}, ("12.ABC.345/01DE-35",))
+
+        for value in invalid_values:
+            with self.assertRaises(TypeError):
+                validate_many_cnpj(value)  # type: ignore[arg-type]
 
 
 if __name__ == "__main__":
