@@ -2,6 +2,13 @@
 
 Languages: [Português (Brasil)](CHANGELOG.md) | **English** | [Español](CHANGELOG.es.md) | [Français](CHANGELOG.fr.md)
 
+## 0.1.3
+
+- add `validate_many` and `validate_many_cnpj`
+- preserve input order and return `items` + `summary`
+- expose stable per-item `reason` codes
+- update README and API for batch validation
+
 ## 0.1.2
 
 - update README to reflect the PyPI publication
